@@ -11,12 +11,14 @@ VALID_LANGS = {'ko', 'en', 'ja', 'es'}
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    # 한번 초기화를 위하여
     error = None
     audio = None
 
     if request.method == 'POST':
         input_text = request.form.get('input_text', '').strip()
         lang = request.form.get('lang', 'ko')
+        # 아무 언어도 사용하지 안았을 경우 ko 사용 했을 떄 해당하는 언어 
 
         # 입력 검증
         if not input_text:
@@ -27,6 +29,7 @@ def index():
             try:
                 # 로그 기록
                 with open("input_log.txt", "a", encoding="utf-8") as f:
+                    # 객체 이름 f
                     f.write(f"{datetime.now()} - 텍스트: {input_text}, 언어: {lang}\n")
 
                 # TTS 처리
