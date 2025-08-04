@@ -16,6 +16,7 @@ def main():
 
     sorted_numbers = bubble_sort(numbers)
     print("Sorted:", ' '.join(map(str, sorted_numbers)))
+    # map str은 각 숫자를 문자열로 변환 ' '.join 리스트안의 문자열을 하나의 문자열로 만듬
 
 if __name__ == "__main__":
     main()
