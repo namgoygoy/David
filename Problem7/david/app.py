@@ -34,7 +34,7 @@ def index():
             except Exception as e:
                 error = f"음성 생성 실패: {e}"
 
-    return render_template("index.html", error=error, audio=audio)
+    return render_template("menu.html", error=error, audio=audio)
 
 # --- 새로 추가된 /menu 라우트 시작 ---
 @app.route('/menu') 
