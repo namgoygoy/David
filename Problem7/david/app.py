@@ -37,7 +37,7 @@ def index():
     return render_template("index.html", error=error, audio=audio)
 
 # --- 새로 추가된 /menu 라우트 시작 ---
-@app.route('/menu') # '/menu' 경로로 요청이 들어오면 이 함수가 실행됩니다.
+@app.route('/menu') 
 def menu():
     # 'templates' 폴더 안에 있는 'menu.html' 파일을 찾아서 사용자에게 웹 페이지로 보여줍니다.
     return render_template('menu.html')
