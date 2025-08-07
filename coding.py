@@ -1,24 +1,16 @@
-# 최대 최소, 정렬
-
-def sort(numbers):
-    num = len(numbers)
-
-    for i in range(num):
-        for j in range(num - i - 1):
-            if numbers[j] > numbers[j+1]:
-                numbers[j], numbers[j+1] = numbers[j+1], numbers[j]
-    return numbers
-
 def main():
-    try:
-        inputs  = input("").strip().split()
-        floats = [float(x) for x in inputs]
-        # result = sort(inputs)
-        result = sort(float)
-        print("sotred", ' '.join(map(str, result))) 
-    except:
-        print("잘못된 입력")
-        return
+    total = int(input())
+    thing_type = int(input())
+    result = 0
+
+    for i in range(thing_type):
+        price, count = map(int, input().split())
+        result += price * count
+    
+    if total == result:
+        print("Yes")
+    else:
+        print("No")
 
 if __name__ == "__main__":
     main()

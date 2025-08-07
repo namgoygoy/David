@@ -1,4 +1,3 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,6 +5,8 @@
 </head>
 <body>
     <h1>텍스트 음성 변환</h1>
+    <p>{{ computername }}</p>
+
     <img src="{{ url_for('static', filename='david.jpg') }}" alt="david" width="200"><br><br>
 
     <form method="POST">
