@@ -1,6 +1,13 @@
-def solution(arr1, arr2):
-    answer = [[]]
-    for i in range(3):
-        answer[[0], [0]] = [arr1[[0],[0]] + arr2[[0],[0]]]
-        answer[[1], [1]] = [arr1[[1],[1]] + arr2[[1],[1]]]
+def solution(name, yearning, photo):
+    score_map = {}
+    for i in range(len(name)):
+        score_map[name[i]] = yearning[i]
+    
+    answer = []
+
+    for photo_list in photo:
+        total_score = 0
+        for person in photo_list:
+            total_score += score_map.get(person,0)
+        answer.append(total_score)
     return answer
