@@ -1,16 +1,6 @@
-def main():
-    total = int(input())
-    thing_type = int(input())
-    result = 0
-
-    for i in range(thing_type):
-        price, count = map(int, input().split())
-        result += price * count
-    
-    if total == result:
-        print("Yes")
-    else:
-        print("No")
-
-if __name__ == "__main__":
-    main()
+def solution(arr1, arr2):
+    answer = [[]]
+    for i in range(3):
+        answer[[0], [0]] = [arr1[[0],[0]] + arr2[[0],[0]]]
+        answer[[1], [1]] = [arr1[[1],[1]] + arr2[[1],[1]]]
+    return answer
