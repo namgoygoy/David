@@ -1,13 +1,10 @@
-def solution(name, yearning, photo):
-    score_map = {}
-    for i in range(len(name)):
-        score_map[name[i]] = yearning[i]
-    
-    answer = []
+def main():
+    a, b, c = input().split()
+    A = int(a)
+    B = int(b)
+    C = int(c)
 
-    for photo_list in photo:
-        total_score = 0
-        for person in photo_list:
-            total_score += score_map.get(person,0)
-        answer.append(total_score)
-    return answer
+    print((A+B)%C)
+    print( ((A%C) + (B%C))%C)
+    print((A*B)%C)
+    print(((A%C) * (B%C))%C)
