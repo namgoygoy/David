@@ -9,4 +9,4 @@ lang = request.args.get('lang', DEFAULT_LANG)
 fp = BytesIO()
 gTTS(text, "com", lang).write_to_fp(fp)
 
-encoded_audio_data = base64.b64encode(fp.getvalue())![david](https://github.com/user-attachments/assets/f0aba13c-8bdb-4a27-8742-f60c90dbf711)
+![david](https://github.com/user-attachments/assets/7dc4d8f4-132d-48b3-b258-ef7cf50544b5)
