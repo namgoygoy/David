@@ -9,4 +9,4 @@ lang = request.args.get('lang', DEFAULT_LANG)
 fp = BytesIO()
 gTTS(text, "com", lang).write_to_fp(fp)
 
-![david](https://github.com/user-attachments/assets/1ddec32d-f5b5-4807-99d2-c7e0b0ea95c0)
+![david](https://github.com/user-attachments/assets/b515263f-02ab-4d5c-a31e-b347325a1e37)
