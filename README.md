@@ -9,4 +9,6 @@ lang = request.args.get('lang', DEFAULT_LANG)
 fp = BytesIO()
 gTTS(text, "com", lang).write_to_fp(fp)
 
-![david](https://github.com/user-attachments/assets/7dc4d8f4-132d-48b3-b258-ef7cf50544b5)
+
+<img src="david.jpg" alt="![david](https://github.com/user-attachments/assets/7dc4d8f4-132d-48b3-b258-ef7cf50544b5)
+" width="300"/>
