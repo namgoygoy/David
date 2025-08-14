@@ -8,6 +8,7 @@
 lang = request.args.get('lang', DEFAULT_LANG)
 fp = BytesIO()
 gTTS(text, "com", lang).write_to_fp(fp)
+encoded_audio_data = base64.b64encode(fp.getvalue())
 ```
 
 <img src="david.jpg" alt="데이빗 이미지" width="300"/>
