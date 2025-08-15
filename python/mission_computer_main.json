@@ -1,0 +1,142 @@
+[
+    {
+        "timestamp": "2023-08-27 12:00:00",
+        "message": "INFO,Center and mission control systems powered down."
+    },
+    {
+        "timestamp": "2023-08-27 11:40:00",
+        "message": "INFO,Oxygen tank explosion."
+    },
+    {
+        "timestamp": "2023-08-27 11:35:00",
+        "message": "INFO,Oxygen tank unstable."
+    },
+    {
+        "timestamp": "2023-08-27 11:30:00",
+        "message": "INFO,Mission completed successfully. Recovery team dispatched."
+    },
+    {
+        "timestamp": "2023-08-27 11:28:00",
+        "message": "INFO,Touchdown confirmed. Rocket safely landed."
+    },
+    {
+        "timestamp": "2023-08-27 11:25:00",
+        "message": "INFO,Main parachutes deployed. Rocket descent rate reducing."
+    },
+    {
+        "timestamp": "2023-08-27 11:20:00",
+        "message": "INFO,Heat shield performing as expected during reentry."
+    },
+    {
+        "timestamp": "2023-08-27 11:15:00",
+        "message": "INFO,Reentry sequence started. Atmospheric drag noticeable."
+    },
+    {
+        "timestamp": "2023-08-27 11:10:00",
+        "message": "INFO,Initiating deorbit maneuvers for rocket's reentry."
+    },
+    {
+        "timestamp": "2023-08-27 11:05:00",
+        "message": "INFO,Satellite deployment successful. Mission objectives achieved."
+    },
+    {
+        "timestamp": "2023-08-27 11:00:00",
+        "message": "INFO,Orbital operations initiated. Satellite deployment upcoming."
+    },
+    {
+        "timestamp": "2023-08-27 10:57:00",
+        "message": "INFO,Entering planned orbit around Earth."
+    },
+    {
+        "timestamp": "2023-08-27 10:55:00",
+        "message": "INFO,Second stage burn nominal. Rocket velocity increasing."
+    },
+    {
+        "timestamp": "2023-08-27 10:52:00",
+        "message": "INFO,Navigation systems show nominal performance."
+    },
+    {
+        "timestamp": "2023-08-27 10:50:00",
+        "message": "INFO,Orbital insertion calculations initiated."
+    },
+    {
+        "timestamp": "2023-08-27 10:48:00",
+        "message": "INFO,Payload fairing jettisoned. Satellite now exposed."
+    },
+    {
+        "timestamp": "2023-08-27 10:45:00",
+        "message": "INFO,Second stage ignition. Rocket continues its ascent."
+    },
+    {
+        "timestamp": "2023-08-27 10:42:00",
+        "message": "INFO,Main engine cutoff confirmed. Stage separation initiated."
+    },
+    {
+        "timestamp": "2023-08-27 10:40:00",
+        "message": "INFO,First stage engines throttled down as planned."
+    },
+    {
+        "timestamp": "2023-08-27 10:37:00",
+        "message": "INFO,Max-Q passed. Vehicle is stable."
+    },
+    {
+        "timestamp": "2023-08-27 10:35:00",
+        "message": "INFO,Approaching max-Q. Aerodynamic pressure increasing."
+    },
+    {
+        "timestamp": "2023-08-27 10:32:00",
+        "message": "INFO,Initial telemetry received. Rocket is on its trajectory."
+    },
+    {
+        "timestamp": "2023-08-27 10:30:00",
+        "message": "INFO,Liftoff! Rocket has left the launchpad."
+    },
+    {
+        "timestamp": "2023-08-27 10:27:00",
+        "message": "INFO,Engines at maximum thrust. Liftoff imminent."
+    },
+    {
+        "timestamp": "2023-08-27 10:25:00",
+        "message": "INFO,Engine ignition sequence started."
+    },
+    {
+        "timestamp": "2023-08-27 10:23:00",
+        "message": "INFO,Countdown sequence initiated."
+    },
+    {
+        "timestamp": "2023-08-27 10:20:00",
+        "message": "INFO,Final system checks complete. Rocket is ready for launch."
+    },
+    {
+        "timestamp": "2023-08-27 10:18:00",
+        "message": "INFO,Cargo bay secured and sealed properly."
+    },
+    {
+        "timestamp": "2023-08-27 10:15:00",
+        "message": "INFO,Life support systems nominal."
+    },
+    {
+        "timestamp": "2023-08-27 10:12:00",
+        "message": "INFO,Propulsion check: Thrusters responding as expected."
+    },
+    {
+        "timestamp": "2023-08-27 10:10:00",
+        "message": "INFO,Avionics check: All systems functional."
+    },
+    {
+        "timestamp": "2023-08-27 10:08:00",
+        "message": "INFO,Pre-launch checklist initiated."
+    },
+    {
+        "timestamp": "2023-08-27 10:05:00",
+        "message": "INFO,Communication established with mission control."
+    },
+    {
+        "timestamp": "2023-08-27 10:02:00",
+        "message": "INFO,Power systems online. Batteries at optimal charge."
+    },
+    {
+        "timestamp": "2023-08-27 10:00:00",
+        "message": "INFO,Rocket initialization process started."
+    }
+]
