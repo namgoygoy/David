@@ -84,6 +84,7 @@ def analyze_log_file():
                 if len(parts[0]) == 19 and parts[0][4] == '-':
                     log_list.append(parts)
         print('\n--- [2] 리스트 객체로 변환된 내용 ---')
+        print(type(log_list))
         print(log_list)
 
         # x는 ['2023-08-27 12:00:00', '...']을 의미 x[0]은 타임 스탬프 즉, 타임 스탬프를 기준으로 역순으로 정렬 
@@ -94,7 +95,6 @@ def analyze_log_file():
         log_dicts = []
         for timestamp, message in log_list:
             log_dicts.append({'timestamp': timestamp, 'message': message})
-            # 딕셔너리 리스트로 전환
         with open(output_json_name, 'w', encoding='utf-8') as json_file:
             json.dump(log_dicts, json_file, indent=4, ensure_ascii=False)
             # json 파일로 저장 ,를 기준으로 4칸씩 들여쓰기 가독성 향상을 위함
