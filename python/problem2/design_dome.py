@@ -27,6 +27,7 @@ def sphere_area(diameter, material, thickness=1.0):
     if not isinstance(thickness, (int, float)) or thickness <= 0:
         raise ValueError("오류: 두께는 0보다 큰 숫자여야 합니다.")
 
+    # 이부분 써서 정리
     # 1. 표면적 계산 (반구체이므로 구의 겉넓이 / 2)
     radius_m = diameter / 2
     surface_area_m2 = (4 * math.pi * radius_m**2) / 2

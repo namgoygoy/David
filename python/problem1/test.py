@@ -1,9 +1,6 @@
-def solution(s, n):
-    s = list(s)
-    for i in range(len(s)):
-        if s[i].isupper():
-            s[i] = chr(ord(s[i] - ord(A) + n) % 26 + ord('A'))
-        elif s[i].islower():
-            s[i] = chr(ord(s[i] - ord(a) + n) % 26 + ord('a'))
-    return "".join(s)
-    
+N = int(input(""))
+
+for i in range(1, N):
+    print(' '*(N-i)+ '*'*(2*i-1))
+for i in range(N, 0, -1):
+    print(' '*(N-i)+ '*'*(2*i-1))

@@ -1,4 +1,5 @@
 import csv
+# 이진 파일 처리 (예: .bin, .jpg, .exe)
 import pickle
 import os
 
