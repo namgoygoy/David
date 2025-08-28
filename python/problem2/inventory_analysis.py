@@ -7,25 +7,24 @@ def manage_inventory():
     """
     Mars 기지 적재물 목록을 분석하고 위험물을 분류하여 저장합니다.
     """
-    # [수정] 스크립트의 위치를 기준으로 파일 경로를 동적으로 생성
     script_dir = os.path.dirname(os.path.abspath(__file__))
     input_csv = os.path.join(script_dir, 'Mars_Base_Inventory_List.csv')
     danger_csv = os.path.join(script_dir, 'Mars_Base_Inventory_danger.csv')
     output_bin = os.path.join(script_dir, 'Mars_Base_Inventory_List.bin')
 
     try:
-        # 1. CSV 파일의 내용을 읽어서 화면에 출력
+        # 1. CSV 파일(Mars_Base_Inventory_List.csv)의 내용을 읽어서 화면에 출력
         print(f'--- [1] 원본 CSV 파일 ({os.path.basename(input_csv)}) 내용 ---')
         with open(input_csv, 'r', encoding='utf-8') as file:
             content = file.read()
             print(content)
         
-        # 2. CSV 내용을 List 객체로 변환 (헤더는 별도 저장)
+        # 2. CSV 내용을 List 객체로 변환
         inventory_list = []
-        header = []
+        header = [] # 항목을 읽어 오기 위해서
         with open(input_csv, 'r', encoding='utf-8') as file:
             reader = csv.reader(file)
-            header = next(reader) # 헤더(첫 줄)를 읽고 저장
+            header = next(reader) # 항목을 읽어 오기 위해서
             for row in reader:
                 # 'Flammability' 값을 float으로 변환 시도, 실패 시 0.0으로 처리
                 try:
@@ -65,7 +64,7 @@ def manage_inventory():
         print(f"\n✅ '{os.path.basename(danger_csv)}' 파일이 성공적으로 저장되었습니다.")
 
         # --- 보너스 과제 ---
-        # 1. 정렬된 전체 목록을 이진 파일로 저장
+        # 1. 정렬된 전체 목록을 이진 파일로 저장 Mars_Base_Inventory_List.bin wb의 b는 바이너리 데이터로 변경 
         with open(output_bin, 'wb') as file:
             pickle.dump(inventory_list, file)
         print(f"✅ '{os.path.basename(output_bin)}' 이진 파일이 성공적으로 저장되었습니다.")

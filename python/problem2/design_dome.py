@@ -27,8 +27,8 @@ def sphere_area(diameter, material, thickness=1.0):
     if not isinstance(thickness, (int, float)) or thickness <= 0:
         raise ValueError("오류: 두께는 0보다 큰 숫자여야 합니다.")
 
-    # 이부분 써서 정리
-    # 1. 표면적 계산 (반구체이므로 구의 겉넓이 / 2)
+    
+    # 1. 표면적 계산 (수식: 반구의 겉넓이 = (구의 겉넓이) / 2 = (4 * π * 반지름²) / 2)
     radius_m = diameter / 2
     surface_area_m2 = (4 * math.pi * radius_m**2) / 2
 
@@ -37,7 +37,7 @@ def sphere_area(diameter, material, thickness=1.0):
     surface_area_cm2 = surface_area_m2 * 10000  # m² to cm²
     volume_cm3 = surface_area_cm2 * thickness
 
-    # 3. 지구에서의 무게(질량) 계산 (부피 * 밀도)
+    # 3. 지구에서의 무게 계산 (부피 * 밀도)
     density_g_cm3 = MATERIAL_DENSITIES[material]
     earth_weight_g = volume_cm3 * density_g_cm3
     earth_weight_kg = earth_weight_g / 1000
@@ -45,6 +45,7 @@ def sphere_area(diameter, material, thickness=1.0):
     # 4. 화성에서의 무게 계산 (지구 무게 * 0.38)
     mars_weight_kg = earth_weight_kg * 0.38
 
+    # 반구의 넓이 구하기 -> 지구의 무게 계산 -> 화성에서의 무게 계산 -> 지구의 표면적과 화성의 무게 출력
     return surface_area_m2, mars_weight_kg
 
 def main():
@@ -67,7 +68,7 @@ def main():
             # 3. sphere_area 함수 호출하여 계산
             area, weight = sphere_area(diameter=diameter_float, material=material_input)
 
-            # 4. 결과 출력
+            # 4. 결과 출력 소수점 3자리
             if area is not None and weight is not None:
                 print("\n--- 계산 결과 ---")
                 print(f"재질 ⇒ {material_input}, 지름 ⇒ {diameter_float}, 두께 ⇒ 1.0, "
