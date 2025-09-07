@@ -1,3 +1,4 @@
+# 랜덤 숫자 생성 및 날짜/시간 기록
 import random
 import datetime
 
@@ -15,7 +16,7 @@ class DummySensor:
             'mars_base_internal_humidity': 0,
             'mars_base_external_illuminance': 0,
             'mars_base_internal_co2': 0,
-            'mars_base_internal_oxygen': 0
+            'mars_base_internal_oxygen': 0  
         }
         print('DummySensor has been initialized.')
 
@@ -67,4 +68,4 @@ if __name__ == '__main__':
     # 4. 결과 출력
     print('\n--- Current Mars Base Environment ---')
     print(current_environment)
-    print('------------------------------------')
+    print('------------------------------------')   

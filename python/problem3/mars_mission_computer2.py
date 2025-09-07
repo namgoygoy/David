@@ -4,7 +4,7 @@ import time
 import json
 from collections import deque
 import platform  # 시스템 기본 정보
-import psutil    # 시스템 상세 정보 및 부하 측정 (설치 필요: pip install psutil)
+import psutil    # 시스템 상세 정보 및 부하 측정
 
 # --- 문제 1: DummySensor 클래스 (변경 없음) ---
 class DummySensor:

@@ -52,20 +52,24 @@ class MissionComputer:
             # 5분 평균 계산 로직 (간소화하여 포함)
             current_time = time.time()
             if current_time - self.last_avg_time >= 300:
-                 # 실제 프로젝트에서는 평균 계산 로직을 여기에 추가
                  self.last_avg_time = current_time
             time.sleep(5)
         print('[Sensor Thread/Process] Stopped.')
 
+
     def get_mission_computer_info(self):
         """20초마다 시스템 정보를 가져와 출력합니다."""
         print('[Info Thread/Process] Started.')
+        # 멀티 쓰레드 or 프로세스의 정지신호 감지 
         while not self.stop_event.is_set():
+            # flush = True 쌓아두지 말고 즉시 출력, 멀티 쓰레드/프로세스의 특성 고려 
             print('\n--- Mission Computer System Info ---', flush=True)
             try:
                 info = {
-                    'os_name': platform.system(), 'os_version': platform.version(),
-                    'cpu_type': platform.processor(), 'cpu_cores': psutil.cpu_count(logical=True),
+                    'os_name': platform.system(), 
+                    'os_version': platform.version(),
+                    'cpu_type': platform.processor(), 
+                    'cpu_cores': psutil.cpu_count(logical=True),
                     'memory_size_gb': round(psutil.virtual_memory().total / (1024**3), 2)
                 }
                 print(json.dumps(info, indent=4), flush=True)
@@ -99,6 +103,7 @@ if __name__ == '__main__':
         print("--- Starting with Multi-threading ---")
         print("Press Enter to stop all threads.\n")
         
+        # Event(), 실행 중일 때 Ture 아닐 때 False 반환 
         stop_event = threading.Event()
         
         # 1. runComputer 인스턴스 하나 생성

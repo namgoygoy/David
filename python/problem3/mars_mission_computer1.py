@@ -4,7 +4,6 @@ import time
 import json
 from collections import deque
 
-# --- 문제 1에서 작성한 DummySensor 클래스 (수정 없음) ---
 class DummySensor:
     """
     화성 기지 환경 데이터 생성을 위한 더미 센서 클래스입니다.
@@ -29,7 +28,6 @@ class DummySensor:
         self.env_values['mars_base_internal_oxygen'] = round(random.uniform(4.0, 7.0), 2)
 
     def get_env(self):
-        # 로그 기능은 문제 1의 보너스 과제이므로 그대로 둡니다.
         now = datetime.datetime.now()
         with open('sensor_log.csv', 'a', encoding='utf-8') as f:
             import os
@@ -51,11 +49,11 @@ class MissionComputer:
         """
         MissionComputer를 초기화하고 DummySensor를 인스턴스화합니다.
         """
+        # 가장 최근에 출력한 센서의 값 저장
         self.env_values = {}
         self.ds = DummySensor()
         
         # 보너스 과제(5분 평균)를 위한 변수
-        # 최근 5분(300초)의 데이터를 저장할 deque와 마지막 평균 계산 시간
         self.data_history = deque()
         self.last_avg_time = time.time()
 
@@ -68,25 +66,25 @@ class MissionComputer:
         
         try:
             while True:
-                # 1. 센서 값 가져와서 env_values에 담기
+                # 랜덤 값 생성
                 self.ds.set_env()
+                # 생성된 값을 가져와 속성에 저장 
                 self.env_values = self.ds.get_env()
                 current_time = time.time()
 
                 # 2. env_values를 json 형태로 화면에 출력
                 print('\n--- Current Environment Data ---')
-                # indent=4 옵션은 JSON을 예쁘게 들여쓰기 해줍니다.
                 print(json.dumps(self.env_values, indent=4))
                 
                 # --- 보너스 과제 2: 5분 평균 값 출력 ---
-                # 현재 시간과 센서 데이터를 기록에 추가
+                # 현재 시간과 생성된 데이터 추가 
                 self.data_history.append({'time': current_time, 'data': self.env_values.copy()})
                 
-                # 5분(300초)마다 평균 계산
+                # 5분(300초)마다 평균 계산 (현재 시간 - 마지막 계산 시간)
                 if current_time - self.last_avg_time >= 300:
                     self.calculate_and_print_average()
-                    self.last_avg_time = current_time # 마지막 평균 계산 시간 갱신
-                    # 오래된 데이터 정리 (메모리 관리)
+                    self.last_avg_time = current_time 
+                    # 가장 오래된 데이터가 5분 넘아갔으면 제거 
                     while self.data_history and current_time - self.data_history[0]['time'] > 300:
                         self.data_history.popleft()
 
@@ -102,8 +100,9 @@ class MissionComputer:
         if not self.data_history:
             return
 
-        # 평균 계산을 위한 딕셔너리 초기화
+        # 딕셔너리 초기화
         sum_values = {key: 0 for key in self.env_values.keys()}
+        # 평균을 구하기 위한 길이 
         count = len(self.data_history)
         
         for record in self.data_history:
