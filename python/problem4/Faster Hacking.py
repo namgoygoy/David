@@ -1,9 +1,11 @@
 import zipfile
+# itertools는 이 모든 조합을 메모리에 저장하는 대신, "다음 조합 줘"라고 요청할 때마다 딱 한 개씩만 즉석에서 만들어서 줍니다
 import itertools
 import time
 import multiprocessing
 import os
-import zlib # zlib 임포트 추가
+# zlib는 '데이터를 압축(compress)하거나 압축을 푸는(decompress) 역할을 하는 라이브러리'입니다. zip을 다루는 라이브러리이므로 인정 
+import zlib 
 
 # --- 설정 변수 ---
 ZIP_FILENAME = 'emergency_storage_key.zip'
@@ -61,8 +63,6 @@ def unlock_zip():
         try:
             with zipfile.ZipFile(ZIP_FILENAME, 'w', zipfile.ZIP_DEFLATED) as zf:
                 zf.writestr("secret_note.txt", b"This is a secret message.")
-                # 실제 테스트를 위해선 아래 암호를 코드와 맞게 설정해야 합니다.
-                # 예: 'python'
                 zf.setpassword(b'pass01') 
         except Exception as e:
             print(f"테스트 파일 생성 중 오류 발생: {e}")
@@ -120,6 +120,5 @@ def unlock_zip():
     print(f"총 소요 시간: {elapsed_time:.2f}초")
 
 if __name__ == '__main__':
-    # Windows, macOS 등에서 멀티프로세싱을 안전하게 시작하기 위해 필수
     multiprocessing.freeze_support()
     unlock_zip()
