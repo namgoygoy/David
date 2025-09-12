@@ -18,6 +18,7 @@ def try_password(process_id, zip_filename, charset_chunk):
     각 프로세스가 실행할 작업 함수.
     할당받은 문자셋(charset_chunk)으로 시작하는 비밀번호를 생성하고 검증합니다.
     """
+    # -----
     print(f"[Process-{process_id}] 작업 시작. 담당 시작 문자: {''.join(charset_chunk[:3])}...")
     
     try:
@@ -28,19 +29,19 @@ def try_password(process_id, zip_filename, charset_chunk):
 
     count = 0
     for start_char in charset_chunk:
+        # product 함수 5개의 다이얼을 첫 번째 조합인 aaaaa부터 마지막 조합인 99999까지 순서대로 하나씩 돌려가며 모든 가능한 조합을 만들어 낸다.
         for remaining_chars_tuple in itertools.product(CHARSET, repeat=PASSWORD_LENGTH - 1):
+            # start_char에서 하나씩 받아 옴 + 5 = 6자리
             password = start_char + "".join(remaining_chars_tuple)
             
             try:
+                # extractall() 압축을 해제하는 함수, 기존의 비밀번호를 인코딩하여 해제 
                 zip_file.extractall(pwd=password.encode('utf-8'))
-                
                 print(f"\n[Process-{process_id}] ★★★ 비밀번호 찾음! ★★★")
                 print(f"[Process-{process_id}] 시도 횟수: {count + 1}")
                 return password, count + 1
 
-            # --- 이 부분을 수정했습니다 ---
             except (RuntimeError, zipfile.BadZipFile, zlib.error):
-                # 비밀번호가 틀렸을 때 발생하는 모든 예외를 처리합니다.
                 count += 1
                 if count % 100000 == 0:
                     print(f"[Process-{process_id}] {count}회 시도 중... (현재 비밀번호: {password})")
@@ -56,17 +57,6 @@ def unlock_zip():
     print(f"--- 비밀번호 찾기 시작 ---")
     print(f"시작 시간: {time.strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"대상 파일: {ZIP_FILENAME}")
-    
-    # 가상으로 zip 파일 생성 (실제 환경에서는 이 부분이 필요 없습니다)
-    if not os.path.exists(ZIP_FILENAME):
-        print(f"경고: '{ZIP_FILENAME}' 파일이 없어 테스트용으로 생성합니다.")
-        try:
-            with zipfile.ZipFile(ZIP_FILENAME, 'w', zipfile.ZIP_DEFLATED) as zf:
-                zf.writestr("secret_note.txt", b"This is a secret message.")
-                zf.setpassword(b'pass01') 
-        except Exception as e:
-            print(f"테스트 파일 생성 중 오류 발생: {e}")
-            return
 
     # --- 멀티프로세싱 설정 ---
     try:
@@ -78,10 +68,10 @@ def unlock_zip():
         print("CPU 코어 수를 확인할 수 없어 1개로 실행합니다.")
 
     # 각 프로세스에 작업을 분배
-    # 예: CHARSET을 4개의 코어에 분배 -> [['a','e','i',...], ['b','f','j',...], ...]
+    # 예: CHARSET을 4개 -> [['a','e','i',...], ['b','f','j',...], ...]
     charset_chunks = [CHARSET[i::cpu_cores] for i in range(cpu_cores)]
     
-    # 각 프로세스에 전달할 인자 리스트 생성
+    # 순서 번호를 알기 위해 enumerate 함수 사용 정보를 가지고 (순서 번호, ZIP 파일 이름, 담당하는 알파벳) 형태의 튜플 생성
     args = [(i, ZIP_FILENAME, chunk) for i, chunk in enumerate(charset_chunks)]
 
     found_password = None
@@ -90,7 +80,7 @@ def unlock_zip():
     # 프로세스 풀 생성 및 실행
     # with 구문을 사용하여 프로세스 풀을 안전하게 관리
     with multiprocessing.Pool(processes=cpu_cores) as pool:
-        # starmap: 각 인자 튜플을 worker 함수에 전달하여 병렬 실행
+        # starmap: 각 인자 튜플을 함수에 전달하여 병렬 실행
         results = pool.starmap(try_password, args)
         
         for password, attempts in results:

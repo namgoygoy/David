@@ -22,7 +22,7 @@ def caesar_cipher_decode(target_text):
                 if shifted_char_code < ord('a'):
                     shifted_char_code += 26
                 decrypted_text += chr(shifted_char_code)
-            # ★★★ 대문자인 경우를 처리하는 로직 추가 ★★★
+                # 대문자
             elif 'A' <= char <= 'Z':
                 shifted_char_code = ord(char) - shift
                 if shifted_char_code < ord('A'):
