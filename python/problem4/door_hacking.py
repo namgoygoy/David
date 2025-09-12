@@ -1,9 +1,8 @@
 import zipfile
-# itertools는 이 모든 조합을 메모리에 저장하는 대신, "다음 조합 줘"라고 요청할 때마다 딱 한 개씩만 즉석에서 만들어서 줍니다
 import itertools
+# itertools의 핵심 철학은 메모리를 효율적으로 사용하는 것입니다. 모든 결과를 미리 만들어두는 게 아니라, 필요할 때마다 하나씩 꺼내 쓸 수 있는 '반복기(iterator)'
 import time
 import multiprocessing
-import os
 # zlib는 '데이터를 압축(compress)하거나 압축을 푸는(decompress) 역할을 하는 라이브러리'입니다. zip을 다루는 라이브러리이므로 인정 
 import zlib 
 
@@ -18,7 +17,6 @@ def try_password(process_id, zip_filename, charset_chunk):
     각 프로세스가 실행할 작업 함수.
     할당받은 문자셋(charset_chunk)으로 시작하는 비밀번호를 생성하고 검증합니다.
     """
-    # -----
     print(f"[Process-{process_id}] 작업 시작. 담당 시작 문자: {''.join(charset_chunk[:3])}...")
     
     try:
@@ -57,39 +55,45 @@ def unlock_zip():
     print(f"--- 비밀번호 찾기 시작 ---")
     print(f"시작 시간: {time.strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"대상 파일: {ZIP_FILENAME}")
+    
+    # ... (zip 파일 생성 부분은 동일) ...
 
     # --- 멀티프로세싱 설정 ---
     try:
-        # 사용 가능한 CPU 코어 수 확인
         cpu_cores = multiprocessing.cpu_count()
         print(f"사용 가능한 CPU 코어: {cpu_cores}개")
     except NotImplementedError:
-        cpu_cores = 1 # cpu_count()를 지원하지 않는 경우 1개로 설정
+        cpu_cores = 1
         print("CPU 코어 수를 확인할 수 없어 1개로 실행합니다.")
 
-    # 각 프로세스에 작업을 분배
-    # 예: CHARSET을 4개 -> [['a','e','i',...], ['b','f','j',...], ...]
+    # 한 장씩 돌아가며 카드를 나눠주는 방식([i::cpu_cores])
     charset_chunks = [CHARSET[i::cpu_cores] for i in range(cpu_cores)]
-    
-    # 순서 번호를 알기 위해 enumerate 함수 사용 정보를 가지고 (순서 번호, ZIP 파일 이름, 담당하는 알파벳) 형태의 튜플 생성
+    # (번호, 파일 이름, 담당할 문자 묶음)을 튜플로 만듬 // 그대로 try_password 함수에 사용됨
     args = [(i, ZIP_FILENAME, chunk) for i, chunk in enumerate(charset_chunks)]
 
     found_password = None
     total_attempts = 0
-
-    # 프로세스 풀 생성 및 실행
-    # with 구문을 사용하여 프로세스 풀을 안전하게 관리
-    with multiprocessing.Pool(processes=cpu_cores) as pool:
-        # starmap: 각 인자 튜플을 함수에 전달하여 병렬 실행
+    
+    pool = None 
+    try:
+        # 프로세스를 미리 만들어 놓고 재사용하기 위해서 직접 지정하는 방식이 아니라 Pool을 사용한다고 함 
+        pool = multiprocessing.Pool(processes=cpu_cores)
+        # starmap() 여러 개의 인자를 필요로 하는 함수(try_password)를 병렬로 실행
         results = pool.starmap(try_password, args)
         
         for password, attempts in results:
             total_attempts += attempts
             if password:
                 found_password = password
-                # 비밀번호를 찾았으므로 다른 프로세스들이 더 이상 작업하지 않도록 종료
                 pool.terminate()
                 break
+    
+    except KeyboardInterrupt:
+        print("\n\n[!] 사용자 요청으로 작업을 중단합니다...")
+        if pool:
+            pool.terminate() # 모든 자식 프로세스를 강제 종료
+            pool.join()      # 자식 프로세스가 완전히 종료될 때까지 대기 
+            # 메인프로세스가 자식프로세스를 기다리지 않고 종료하면 자식프로세스들은 좀비프로세스가 됨 / 불필요한 자리 차지
 
     end_time = time.time()
     elapsed_time = end_time - start_time
@@ -104,11 +108,14 @@ def unlock_zip():
         except IOError as e:
             print(f"오류: 파일 '{PASSWORD_TXT_FILENAME}'에 쓰는 중 문제가 발생했습니다: {e}")
     else:
-        print("실패: 모든 조합을 시도했지만 비밀번호를 찾지 못했습니다.")
+        # KeyboardInterrupt로 종료된 경우 실패 메시지를 수정할 수 있습니다.
+        print("작업이 중단되었거나, 모든 조합을 시도했지만 비밀번호를 찾지 못했습니다.")
         
     print(f"총 시도 횟수: {total_attempts:,}")
     print(f"총 소요 시간: {elapsed_time:.2f}초")
 
 if __name__ == '__main__':
+    # Windows나 macOS에서 파이썬 스크립트를 하나의 실행 파일(.exe 등)로 만들 때 멀티프로세싱 기능이 올바르게 동작하도록 지원
+    # 이 함수를 호출하지 않으면 에러가 발생하는 경우가 많음
     multiprocessing.freeze_support()
     unlock_zip()

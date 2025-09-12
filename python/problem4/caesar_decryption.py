@@ -1,5 +1,3 @@
-# --- 설정 변수 ---
-# 해독할 파일명을 'password 2.txt'로 변경합니다.
 PASSWORD_FILENAME = 'password 2.txt' 
 RESULT_FILENAME = 'result.txt'
 
@@ -12,12 +10,11 @@ def caesar_cipher_decode(target_text):
     print(f"원본 암호: '{target_text}'\n")
     print("--- 카이사르 암호 해독 시도 (1-26) ---")
 
-    # 1부터 26까지 모든 자리수를 테스트
     for shift in range(1, 27):
         decrypted_text = ''
         for char in target_text:
-            # 소문자인 경우
-            if 'a' <= char <= 'z':
+            # 소문자
+            if 'a' <= char <= 'z': 
                 shifted_char_code = ord(char) - shift
                 if shifted_char_code < ord('a'):
                     shifted_char_code += 26
