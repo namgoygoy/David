@@ -148,19 +148,23 @@ class EngineeringCalculatorApp(QWidget):
             button.clicked.connect(self.on_button_click)
             # 버튼의 좌표 len((1, 6))는 2이므로 (1, 6)이라면 pos[0] = 1 pos[1] = 6
             if len(pos) == 2: grid.addWidget(button, pos[0], pos[1])
-            
+            # 0 처럼 특별한 크기를 가진 좌표 (5, 6, 1, 2) 이므로 5행 6열 1높이 2너비
             else: grid.addWidget(button, pos[0], pos[1], pos[2], pos[3])
 
         self.setWindowTitle('공학용 계산기')
+        # 창의 위치와 크기 100,100 위치 900x450 크기
         self.setGeometry(100, 100, 900, 450)
         self.show()
 
     def on_button_click(self):
+        # 버튼 신호 감지
         sender = self.sender()
+        # 버튼 텍스트 가지고 오기
         button_text = sender.text()
+        # 버튼 누르기 직전의 상태 임시 저장
         display_text = self.result_label.text()
 
-        # 공학용 계산 기능 버튼들
+        # 공학용 계산 기능 버튼
         unary_operations = ['sin', 'cos', 'tan', 'sinh', 'cosh', 'tanh', 'x²', 'x³']
 
         if button_text.isdigit() or button_text == '.':
@@ -182,10 +186,12 @@ class EngineeringCalculatorApp(QWidget):
         elif button_text == 'π':
             display_text = self.calculator.set_constant('π')
 
+        # 사용자가 입력한 값을 보여 줌
         self.result_label.setText(str(display_text))
 
-
 if __name__ == '__main__':
+    # 전체적인 흐름을 감독하는 객체
     app = QApplication(sys.argv)
     ex = EngineeringCalculatorApp()
+    # app.exec_()창 닫는 것을 감지 
     sys.exit(app.exec_())
