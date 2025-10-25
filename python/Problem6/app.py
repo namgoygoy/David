@@ -4,8 +4,6 @@ import seaborn as sns
 import platform
 import os
 
-# --- 1. 기본 설정 ---
-
 def set_korean_font():
     """ 맥이나 윈도우에서 한글 폰트 설정하는 함수 """
     system_name = platform.system()
@@ -34,7 +32,7 @@ test_file_path = os.path.join(script_dir, 'test.csv')
 
 
 # --- 2. 데이터 불러오기 및 병합 (문제 2, 3, 4) ---
-
+    
 try:
     # (문제 2) 파일 읽기
     train_df = pd.read_csv(train_file_path)
@@ -60,10 +58,9 @@ except FileNotFoundError:
 # 원본 데이터를 건드리지 않기 위해 복사본 사용
 analysis_df = train_df.copy()
 
-# df.corr()는 숫자하고만 작동함 따라서 True/False 값들을 컴퓨터가 계산할 수 있는 숫자 1.0과 0.0으로 바꾸는 것
 analysis_df['Transported'] = analysis_df['Transported'].astype(float)
 analysis_df['CryoSleep'] = analysis_df['CryoSleep'].map({True: 1.0, False: 0.0})
-analysis_df['VIP'] = analysis_df['VIP'].map({True: 1.0, False: 0.0})
+analysis_df['VIP'] = analysis_df['VIP'].map({True: 1.0, False: 0.0})    
 
 # 숫자형 컬럼들 간의 상관관계 계산
 corr_matrix = analysis_df.corr(numeric_only=True)
@@ -86,11 +83,10 @@ print('\n--- 연령대별 Transported 여부 시각화 ---')
 # 시각화를 위해 'Age'나 'Transported'에 빈 값(NaN)이 있는 행은 제외
 plot_df = train_df.dropna(subset=['Age', 'Transported']).copy()
 
-# 나이를 기준으로 연령대 그룹 만들기
-# (0~9, 10~19, 20~29, ..., 70 이상)
 bins = [0, 9, 19, 29, 39, 49, 59, 69, float('inf')]
 labels = ['10대 미만', '10대', '20대', '30대', '40대', '50대', '60대', '70대 이상']
 
+# true (19, 29)처럼 오른쪽 숫자(29)가 포함
 plot_df['age_group'] = pd.cut(
     plot_df['Age'], 
     bins=bins, 
@@ -99,7 +95,7 @@ plot_df['age_group'] = pd.cut(
 )
 
 # 그래프 그리기
-plt.figure(figsize=(12, 7)) # 그래프 크기
+plt.figure(figsize=(12, 7)) 
 
 sns.countplot(
     data=plot_df, 
